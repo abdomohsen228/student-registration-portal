@@ -1,4 +1,4 @@
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
@@ -12,10 +12,10 @@
             <a href="/" class="main_link">URegister</a>
         </div>
         <div class="secondary_links_div">
-            <a href="#" class="Header_link">Home</a>
-            <a href="#" class="Header_link">Form</a>
-            <a href="#" class="Header_link">Login</a>
-            <a href="#" class="Header_link">Signup</a>
+            <a href="#" class="Header_link" data-translate="home">{{ __('messages.home') }}</a>
+            <a href="#" class="Header_link" data-translate="form">{{ __('messages.form') }}</a>
+            <a href="#" class="Header_link" data-translate="login">{{ __('messages.login') }}</a>
+            <a href="#" class="Header_link" data-translate="sign">{{ __('messages.sign') }}</a>
         </div>
 
     </nav>

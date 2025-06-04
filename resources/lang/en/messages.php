@@ -1,0 +1,31 @@
+<?php
+return [
+    'home' => 'Home',
+    'form' => 'Form',
+    'login' => 'Login',
+    'sign' => 'Sign Up',
+    'logs' => 'Logs',
+    'products' => 'Products',
+    'contact' => 'Contact us',
+    'demo' => 'Demo',
+    'about' => 'About us',
+    'profile' => 'Profile',
+    'linkedin' => 'LinkedIn',
+    'facebook' => 'Facebook',
+    'instagram' => 'Instagram',
+    'github' => 'GitHub',
+    'twitter' => 'Twitter',
+    'register' => 'Register',
+    'fullName' => 'Full Name',
+    'username' => 'Username',
+    'email' => 'Email',
+    'address' => 'Address',
+    'password' => 'Password',
+    'phone' => 'Phone',
+    'confirmPassword' => 'Confirm Password',
+    'whatsApp' => 'WhatsApp',
+    'validate' => 'Validate',
+    'uploadImage' => 'Upload Image',
+    'confirm' => 'Confirm'
+
+];
