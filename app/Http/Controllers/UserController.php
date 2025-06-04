@@ -5,36 +5,140 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
-            'full_name' => 'required|string|max:255',
-            'user_name' => 'required|string|max:255|unique:users,user_name',
-            'phone' => 'required|string|max:20',
-            'whatsapp_number' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-            'user_image' => 'nullable|string|max:255',
-        ]);
+        try {
+            $validatedData = $this->validateUser($request);
 
-        $user = User::create([
-            'full_name' => $request->full_name,
-            'user_name' => $request->user_name,
-            'phone' => $request->phone,
-            'whatsapp_number' => $request->whatsapp_number,
-            'address' => $request->address,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'user_image' => $request->user_image,
-        ]);
+            if ($request->hasFile('user_image')) {
+                $validatedData['user_image'] = $this->uploadUserImage($request->file('user_image'), $validatedData['user_name']);
+            }
 
-        return response()->json([
-            'message' => 'User created successfully',
-            'user' => $user,
-        ], 201);
+            $user = $this->createUser($validatedData);
+
+            return response()->json([
+                'message' => 'User created successfully',
+                'user' => $user,
+            ], 201);
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'User creation failed',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+
+    protected function validateUser(Request $request): array
+    {
+        return $request->validate([
+            'full_name' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-zA-Z-\' ]*$/',
+            ],
+            'user_name' => [
+                'required',
+                'string',
+                'max:50',
+                'regex:/^[a-zA-Z0-9]*$/',
+                'unique:users,user_name',
+            ],
+            'phone' => [
+                'required',
+                'string',
+                'max:20',
+                'regex:/^[0-9]*$/',
+                'unique:users,phone',
+            ],
+            'whatsapp_number' => [
+                'nullable',
+                'string',
+                'max:20',
+                'regex:/^[0-9]*$/',
+            ],
+            'address' => [
+                'nullable',
+                'string',
+                'max:500',
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:100',
+                'unique:users,email',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/',
+            ],
+            'user_image' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,gif',
+                'max:2048',
+            ],
+        ], [
+            'full_name.regex' => 'Only letters, spaces, hyphens, and apostrophes are allowed.',
+            'user_name.regex' => 'Only letters and numbers are allowed.',
+            'phone.regex' => 'Only numbers are allowed.',
+            'whatsapp_number.regex' => 'Only numbers are allowed.',
+            'password.regex' => 'Password must contain at least one number and one special character.',
+        ]);
+    }
+
+    protected function uploadUserImage($imageFile, $username): string
+    {
+        try {
+            $extension = $imageFile->getClientOriginalExtension();
+            $filename = $username . '_' . Str::random(10) . '.' . $extension;
+            
+            $path = $imageFile->storeAs('profile_images', $filename, 'public');
+            
+            return Storage::url($path);
+
+        } catch (\Exception $e) {
+            throw new \Exception('Failed to upload image: ' . $e->getMessage());
+        }
+    }
+
+    protected function createUser(array $validatedData): User
+    {
+        try {
+            return User::create([
+                'full_name' => $validatedData['full_name'],
+                'user_name' => $validatedData['user_name'],
+                'phone' => $validatedData['phone'],
+                'whatsapp_number' => $validatedData['whatsapp_number'] ?? null,
+                'address' => $validatedData['address'] ?? null,
+                'email' => $validatedData['email'],
+                'password' => Hash::make($validatedData['password']),
+                'user_image' => $validatedData['user_image'] ?? null,
+            ]);
+        } catch (\Exception $e) {
+            // Clean up uploaded image if user creation fails
+            if (isset($validatedData['user_image'])) {
+                Storage::delete($validatedData['user_image']);
+            }
+            throw new \Exception('Failed to create user: ' . $e->getMessage());
+        }
+    }
+
+
 }
