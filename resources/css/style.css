@@ -1,0 +1,322 @@
+/* Importing Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+
+.container * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.Form-body {
+    width: 100vw;
+    min-height: 100vh;
+    background-position: center;
+    background-color: rgba(73, 119, 45, 0.208);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+}
+
+.container .input-box {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.container {
+    width: 600px;
+    padding: 15px 30px 20px;
+    border-radius: 10px;
+    background-color: rgba(248, 246, 246, 0.208);
+    backdrop-filter: blur(5px);
+    border-radius: 40px;
+    border: 3px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+.input-box .box {
+    position: relative;
+    width: 48%;
+    height: 50px;
+    margin: 10px 0;
+}
+
+
+.container h1 {
+
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgb(6, 6, 6);
+}
+
+.box {
+
+    border-bottom: 2px solid;
+    position: relative;
+    width: 300px;
+    height: 50px;
+    margin: 20px;
+
+}
+
+.box1 {
+
+    position: relative;
+    width: 200px;
+    height: 30px;
+    margin: 20px;
+
+}
+
+
+.input-box .box input {
+
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: black;
+    padding: 0 30px 0 10px;
+
+}
+
+.box label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    transition: 0.5s;
+}
+
+.box i {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+}
+
+.fa::before {
+    font-family: FontAwesome;
+}
+
+
+
+.links {
+    text-align: center;
+    padding: 15px;
+}
+
+button {
+    width: 100%;
+    height: 50px;
+    border-radius: 60px;
+    border: none;
+    font-size: 1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.5s;
+    border-color: rgb(0, 0, 0);
+
+}
+
+#validate-whatsapp:hover {
+    background-color: rgba(10, 43, 20, 3);
+    color: #FDFAE2;
+}
+
+
+button:hover {
+    background: rgba(0, 0, 0, 0.4);
+
+}
+
+.box1 button:hover {
+    background-color: rgba(10, 43, 20, 3);
+    color: #FDFAE2;
+}
+
+.file-upload input[type="file"] {
+    position: relative;
+    left: 26px;
+    top: 35px;
+    width: 200px;
+
+}
+
+
+input:focus~label,
+input:valid~label {
+    top: -5px;
+
+}
+
+.error {
+    color: red;
+    display: block;
+    padding: 3px 5px 5px 5px;
+    position: absolute;
+    right: 0;
+
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #E0E7DA inset !important;
+    -webkit-text-fill-color: black !important;
+    height: 40px !important;
+    padding-top: 8px !important;
+}
+
+
+/*-------------------------Media Query--------------------*/
+
+
+@media (min-width: 1000px) and (max-width: 1199px) {
+    .container {
+        width: 550px;
+    }
+
+    .container * {
+        font-size: 14px;
+    }
+
+    .container h1 {
+        font-size: 27px;
+        padding: 4px;
+        margin-bottom: 0;
+    }
+
+    button {
+        height: 40px;
+    }
+
+    .input-box .box {
+        margin: 5px 0px;
+    }
+
+    .links {
+        padding: 7px;
+    }
+
+    .box1 {
+        margin: 10px;
+    }
+
+    .file-upload {
+        align-content: center;
+    }
+
+    .file-upload input[type="file"] {
+        top: 0;
+
+    }
+
+
+}
+
+@media (min-width: 768px) and (max-width: 999px) {
+    .Form-body {
+        min-height: 68vh;
+    }
+
+    .container {
+        width: 500px;
+    }
+
+    .container * {
+        font-size: 14px;
+    }
+
+    .container h1 {
+        font-size: 23px;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+    button {
+        height: 40px;
+    }
+
+    .input-box .box {
+        margin: 8px 0px;
+    }
+
+    .links {
+        padding: 12px;
+    }
+
+    .box1 {
+        margin: 10px;
+    }
+
+    .file-upload {
+        align-content: center;
+    }
+
+    .file-upload input[type="file"] {
+        top: 0;
+
+    }
+}
+
+
+@media (max-width:767px) {
+    .Form-body {
+        min-height: 68vh;
+    }
+
+    .container {
+        width: 300px;
+        padding-top: 12px;
+        padding-bottom: 17px;
+    }
+
+    .container * {
+        font-size: 10px;
+    }
+
+    .container h1 {
+        font-size: 17px;
+        padding: 10px;
+        margin-bottom: 0;
+    }
+
+    button {
+        height: 30px;
+    }
+
+    .input-box .box {
+        margin: 4px 0px;
+    }
+
+    .input-box .box input {
+        padding-right: 0;
+    }
+
+    .links {
+        padding: 8px;
+    }
+
+    .box1 {
+        margin: 10px;
+    }
+
+    .file-upload {
+        align-content: center;
+    }
+
+    .file-upload input[type="file"] {
+        top: 0;
+
+    }
+}

@@ -1,0 +1,135 @@
+.Header {
+    background-color: rgba(10, 43, 20, 1);
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 20px 0px 20px 0px;
+}
+
+
+.Header .main_link_div {
+    position: relative;
+
+}
+
+
+.Header .secondary_links_div {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 30px;
+    align-content: center;
+    max-height: 90px;
+
+}
+
+
+.Header_link,
+.Header .main_link {
+    color: #FDFAE2;
+    font-size: 20px;
+    text-decoration: none;
+    position: relative;
+}
+
+
+.Header .main_link {
+    font-size: 30px;
+}
+
+
+.Header_link:hover {
+    color: rgb(253, 250, 226, 0.9);
+    transition: 0.2s;
+}
+
+
+/*--------------- Media Query ----------------------*/
+
+@media (min-width: 1200px) {
+    .Header .main_link_div {
+        right: 6%;
+    }
+
+    .Header {
+        height: 50px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .Header .secondary_links_div,
+    .Header .main_link_div {
+        align-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (min-width: 1000px) and (max-width: 1199px) {
+    .Header .Header_link {
+        font-size: 17px;
+    }
+
+    .Header .main_link {
+        font-size: 25px;
+    }
+
+    .Header {
+        height: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        padding-top: 0;
+    }
+
+    .Header .main_link_div,
+    .Header .secondary_links_div {
+        padding-top: 10px;
+        padding-bottom: 0px;
+    }
+
+    .Header .secondary_links_div,
+    .Header .main_link {
+        align-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 999px) {
+    .Header .Header_link {
+        font-size: 16px;
+    }
+
+    .Header .main_link {
+        font-size: 25px;
+    }
+
+    .Header {
+        height: 40px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+}
+
+
+@media (max-width:767px) {
+    .Header .main_link {
+        font-size: 18px;
+    }
+
+    .Header .Header_link {
+        font-size: 12px;
+    }
+
+    .Header {
+        height: 50px;
+        padding: 0;
+        align-content: center;
+        margin-bottom: 20px;
+    }
+
+    .Header .main_link_div,
+    .Header .secondary_links_div {
+        align-content: center;
+        flex-wrap: wrap;
+    }
+}
