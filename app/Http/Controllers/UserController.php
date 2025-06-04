@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function store(Request $request)
+    public function createNewUser(Request $request)
     {
         try {
             $validatedData = $this->validateUser($request);
@@ -41,6 +41,23 @@ class UserController extends Controller
         }
     }
 
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+        $user = User::where('email', $credentials['email'])->first();
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            return response()->json([
+                'message' => 'Invalid credentials',
+            ], 401);
+        }
+        return response()->json([
+            'message' => 'Login successful',
+            'user' => $user,
+        ]);
+    }
     protected function validateUser(Request $request): array
     {
         return $request->validate([
@@ -85,7 +102,6 @@ class UserController extends Controller
                 'required',
                 'string',
                 'min:8',
-                'confirmed',
                 'regex:/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/',
             ],
             'user_image' => [
@@ -108,9 +124,9 @@ class UserController extends Controller
         try {
             $extension = $imageFile->getClientOriginalExtension();
             $filename = $username . '_' . Str::random(10) . '.' . $extension;
-            
+
             $path = $imageFile->storeAs('profile_images', $filename, 'public');
-            
+
             return Storage::url($path);
 
         } catch (\Exception $e) {
