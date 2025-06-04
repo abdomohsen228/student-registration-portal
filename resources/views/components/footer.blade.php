@@ -1,4 +1,4 @@
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <meta charset="UTF-8">
@@ -6,26 +6,26 @@
     <!-- <link rel="stylesheet" href="../assets/CSS/footer.css"> -->
 </head>
 
-<body class="Footer-body">
+<body class="Footer-body" dir="ltr">
     <footer class="Footer">
         <div class="main_link_div">
             <a href="#" class="main_link">URegister</a>
         </div>
         <div class="secondary_links_div">
-            <a href="#" class="Footer_link">Home</a>
-            <a href="#" class="Footer_link">Logs</a>
-            <a href="#" class="Footer_link">Products</a>
-            <a href="#" class="Footer_link">Contact</a>
-            <a href="#" class="Footer_link">Demo</a>
-            <a href="#" class="Footer_link">Form</a>
-            <a href="#" class="Footer_link">About us</a>
-            <a href="#" class="Footer_link">Profile</a>
-            <a href="#" class="Footer_link">LinkedIn</a>
-            <a href="#" class="Footer_link">Facebook</a>
-            <a href="#" class="Footer_link">Instagram</a>
-            <a href="#" class="Footer_link">GitHub</a>
-            <a href="#" class="Footer_link">Twitter</a>
-            <a href="#" class="Footer_link">01014494847</a>
+            <a href="#" class="Footer_link" data-translate="home">{{ __('messages.home') }}</a>
+            <a href="#" class="Footer_link" data-translate="logs">{{ __('messages.logs') }}</a>
+            <a href="#" class="Footer_link" data-translate="products">{{ __('messages.products') }}</a>
+            <a href="#" class="Footer_link" data-translate="contact">{{ __('messages.contact') }}</a>
+            <a href="#" class="Footer_link" data-translate="demo">{{ __('messages.demo') }}</a>
+            <a href="#" class="Footer_link" data-translate="form">{{ __('messages.form') }}</a>
+            <a href="#" class="Footer_link" data-translate="about">{{ __('messages.about') }}</a>
+            <a href="#" class="Footer_link" data-translate="profile">{{ __('messages.profile') }}</a>
+            <a href="#" class="Footer_link" data-translate="linkedin">{{ __('messages.linkedin') }}</a>
+            <a href="#" class="Footer_link" data-translate="facebook">{{ __('messages.facebook') }}</a>
+            <a href="#" class="Footer_link" data-translate="instagram">{{ __('messages.instagram') }}</a>
+            <a href="#" class="Footer_link" data-translate="github">{{ __('messages.github') }}</a>
+            <a href="#" class="Footer_link" data-translate="twitter">{{ __('messages.twitter') }}</a>
+            <a href="#" class="Footer_link" >01014494847</a>
             <a href="#" class="Footer_link">01155234167</a>
             <a href="#" class="Footer_link">0123345716</a>
         </div>
