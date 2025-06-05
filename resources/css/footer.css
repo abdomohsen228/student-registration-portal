@@ -34,6 +34,12 @@
     max-width: 300px;
 }
 
+.Footer .col {
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+
 
 .main_link_div,
 .secondary_links_div {
@@ -75,7 +81,7 @@
         right: 6%;
     }
 
-    .Footer .secondary_links_div {
+    .Footer .col {
         max-height: 200px;
         gap: 28px;
         column-gap: 50px;
@@ -85,6 +91,7 @@
     .Footer .secondary_links_div {
         position: relative;
         padding: 20px;
+        padding-top:50px;
         /* top: 10%; */
     }
 }
@@ -92,6 +99,10 @@
 @media (min-width: 1000px) and (max-width: 1199px) {
     .Footer .Footer_link {
         font-size: 16px;
+    }
+
+    .Footer .col{
+        gap:20px;
     }
 
     .Footer .main_link {
@@ -113,14 +124,17 @@
     }
 
     .Footer .main_link_div {
-        right: 0;
-        left: 1%;
+        padding-top: 40px;
     }
 }
 
 @media (min-width: 768px) and (max-width: 999px) {
     .Footer {
         height: 230px;
+    }
+
+    .Footer .col {
+        gap:20px
     }
 
     .Footer .Footer_link {
@@ -146,24 +160,39 @@
 @media (max-width:767px) {
     .Footer .main_link {
         font-size: 22px;
-
+        min-width: 335px;
     }
 
     .Footer .Footer_link {
-        font-size: 12px;
+        font-size: 9px;
+    }
+
+    .Footer .col{
+        gap:16px;
+        padding-top: 15px;
     }
 
     .Footer {
         height: 171px;
     }
+    .Footer .main_link_div{
+        padding-left:20px;
+    }
+
+    .Footer .main_link{
+        font-size: 16px;
+        bottom:-20px;
+        position: relative;
+    }
 
     .Footer .secondary_links_div {
-        gap: 18px;
-        max-height: 134px;
+        gap: 9px;
+        max-height: 95px;
+        padding: 16px 10px 10px 0;
     }
 
     .Footer .main_link_div,
     .Footer .secondary_links_div {
-        top: 10%;
+        padding-top:28px;
     }
 }

@@ -5,7 +5,7 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
 ?>
 @include('components/header')
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" class="html-body">
 
 <head>
     <meta charset="UTF-8">
@@ -119,7 +119,7 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
                 </div>
 
                 <div class="box1">
-                    <button data-translate="confirm">{{ __('messages.confirm') }}</button>
+                    <button data-translate="confirm" class="confirm-btn">{{ __('messages.confirm') }}</button>
                 </div>
             </div>
 

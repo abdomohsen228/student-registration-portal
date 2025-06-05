@@ -113,11 +113,11 @@
 
 @media (max-width:767px) {
     .Header .main_link {
-        font-size: 18px;
+        font-size: 14px;
     }
 
     .Header .Header_link {
-        font-size: 12px;
+        font-size: 9px;
     }
 
     .Header {
@@ -131,5 +131,6 @@
     .Header .secondary_links_div {
         align-content: center;
         flex-wrap: wrap;
+        gap:20px;
     }
 }
