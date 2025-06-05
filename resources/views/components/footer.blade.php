@@ -12,22 +12,30 @@
             <a href="#" class="main_link">URegister</a>
         </div>
         <div class="secondary_links_div">
-            <a href="#" class="Footer_link" data-translate="home">{{ __('messages.home') }}</a>
-            <a href="#" class="Footer_link" data-translate="logs">{{ __('messages.logs') }}</a>
-            <a href="#" class="Footer_link" data-translate="products">{{ __('messages.products') }}</a>
-            <a href="#" class="Footer_link" data-translate="contact">{{ __('messages.contact') }}</a>
-            <a href="#" class="Footer_link" data-translate="demo">{{ __('messages.demo') }}</a>
-            <a href="#" class="Footer_link" data-translate="form">{{ __('messages.form') }}</a>
-            <a href="#" class="Footer_link" data-translate="about">{{ __('messages.about') }}</a>
-            <a href="#" class="Footer_link" data-translate="profile">{{ __('messages.profile') }}</a>
-            <a href="#" class="Footer_link" data-translate="linkedin">{{ __('messages.linkedin') }}</a>
-            <a href="#" class="Footer_link" data-translate="facebook">{{ __('messages.facebook') }}</a>
-            <a href="#" class="Footer_link" data-translate="instagram">{{ __('messages.instagram') }}</a>
-            <a href="#" class="Footer_link" data-translate="github">{{ __('messages.github') }}</a>
-            <a href="#" class="Footer_link" data-translate="twitter">{{ __('messages.twitter') }}</a>
-            <a href="#" class="Footer_link" >01014494847</a>
-            <a href="#" class="Footer_link">01155234167</a>
-            <a href="#" class="Footer_link">0123345716</a>
+            <div class="col">
+                <a href="#" class="Footer_link" data-translate="home">{{ __('messages.home') }}</a>
+                <a href="#" class="Footer_link" data-translate="logs">{{ __('messages.logs') }}</a>
+                <a href="#" class="Footer_link" data-translate="products">{{ __('messages.products') }}</a>
+                <a href="#" class="Footer_link" data-translate="contact">{{ __('messages.contact') }}</a>
+            </div>
+            <div class="col">
+                <a href="#" class="Footer_link" data-translate="demo">{{ __('messages.demo') }}</a>
+                <a href="#" class="Footer_link" data-translate="form">{{ __('messages.form') }}</a>
+                <a href="#" class="Footer_link" data-translate="about">{{ __('messages.about') }}</a>
+                <a href="#" class="Footer_link" data-translate="profile">{{ __('messages.profile') }}</a>
+            </div>
+            <div class="col">
+                <a href="#" class="Footer_link" data-translate="linkedin">{{ __('messages.linkedin') }}</a>
+                <a href="#" class="Footer_link" data-translate="facebook">{{ __('messages.facebook') }}</a>
+                <a href="#" class="Footer_link" data-translate="instagram">{{ __('messages.instagram') }}</a>
+                <a href="#" class="Footer_link" data-translate="github">{{ __('messages.github') }}</a>
+            </div>
+            <div class="col">
+                <a href="#" class="Footer_link" data-translate="twitter">{{ __('messages.twitter') }}</a>
+                <a href="#" class="Footer_link" >01014494847</a>
+                <a href="#" class="Footer_link">01155234167</a>
+                <a href="#" class="Footer_link">0123345716</a>
+            </div>
         </div>
 
     </footer>
