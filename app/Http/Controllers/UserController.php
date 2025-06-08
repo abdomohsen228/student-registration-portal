@@ -14,7 +14,7 @@ class UserController extends Controller
     public function createNewUser(Request $request)
     {
         try {
-            printf("Creating new user with data: %s\n", json_encode($request->all()));
+            // printf("Creating new user with data: %s\n", json_encode($request->all()));
             $validatedData = $this->validateUser($request);
 
             if ($request->hasFile('user_image')) {
