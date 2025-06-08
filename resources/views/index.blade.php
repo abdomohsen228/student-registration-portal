@@ -15,6 +15,7 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @vite(['resources/css/style.css', 'resources/css/header.css', 'resources/css/footer.css'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 
@@ -25,6 +26,7 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
         <h1 data-translate="register">{{ __('messages.register') }}</h1>
 
         <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <!--___________________________FULLNAME/USERNAME____________________________________________________-->
             <div class="input-box" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                 <div class="box">

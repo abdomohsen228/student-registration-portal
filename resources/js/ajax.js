@@ -1,27 +1,53 @@
-// Before submitting the form, check if the username already exists in the database
-$(document).ready(function () {
-    $("#user_name").on("input", function () {
-        let username = $(this).val().trim();
 
-        // Skip AJAX if the username is empty or invalid
-        const usernamePattern = /^[a-zA-Z0-9]+$/;
-        if (!usernamePattern.test(username) || username.length === 0) {
-            // $("#user_name_error").text("").css("color", "");
-            $("#user_name_ajax_error").text(""); // Clear AJAX error
+export class AjaxValidator {
+    static async checkUsernameAvailability(username) {
+        try {
+            // Validate format first (client-side)
+            const formatError = this.validateUsernameFormat(username);
+            if (formatError) 
+                return ;
 
-            return;
-        }
-        if (username.length > 0) {
-            $.ajax({
-                url: "controllers/check_username.php",
-                method: "GET",
-                data: { q: username },
-                success: function (response) {
-                    $("#user_name_ajax_error").text(response).css("color", response.includes("exists") ? "red" : "green");
-                }
+            // Check availability via AJAX
+            const response = await fetch(`/ajax/check-username`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({ username })
             });
-        } else {
-            $("#user_name_ajax_error").text("");
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data;
+
+        } catch (error) {
+            console.error('Error checking username:', error);
+            return { 
+                available: true, // Assume available if check fails
+                error: 'Could not verify username availability'
+            };
         }
-    });
-});
+    }
+
+    static validateUsernameFormat(username) {
+        const minLength = 3;
+        const maxLength = 20;
+        const regex = /^[a-zA-Z0-9_-]+$/;
+
+        if (username.length < minLength) {
+            return `Username must be at least ${minLength} characters`;
+        }
+        if (username.length > maxLength) {
+            return `Username must be no more than ${maxLength} characters`;
+        }
+        if (!regex.test(username)) {
+            return 'Only letters, numbers, _ and - allowed';
+        }
+        return null;
+    }
+}

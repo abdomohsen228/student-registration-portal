@@ -1,4 +1,41 @@
+import { AjaxValidator } from './ajax.js';
 document.addEventListener("DOMContentLoaded", function () {
+    const usernameInput = document.getElementById('user_name');
+    const errorElement = document.getElementById('user_name_ajax_error');
+    let debounceTimer;
+
+    usernameInput.addEventListener('input', async function() {
+        const username = this.value.trim();
+        
+        clearTimeout(debounceTimer);
+        
+        // Show loading indicator if needed
+        if(username.length <= 2) {
+            errorElement.textContent = '';
+            errorElement.style.color = '';
+            return; // Skip validation if username is empty
+        }
+        errorElement.textContent = 'Checking...';
+        errorElement.style.color = 'blue';
+        console.log("Checking username availability...");
+        debounceTimer = setTimeout(async () => {
+            const result = await AjaxValidator.checkUsernameAvailability(username);
+            if (result.error) {
+                errorElement.textContent = result.error;
+                errorElement.style.color = 'red';
+                isValid = false; // Prevent form submission if there's an error
+            } else if (!result.available) {
+                errorElement.textContent = result.message;
+                errorElement.style.color = 'red';
+                isValid = false; // Prevent form submission if username is not available
+            } else {
+                errorElement.textContent = '✓ Available';
+                errorElement.style.color = 'green';
+            }
+        }, 500); // 500ms debounce delay
+    });
+
+    // Rest of your validation code...
     const form = document.getElementById("registrationForm");
     const inputs = form.querySelectorAll("input");
     const imageInput = document.getElementById("user_image");
@@ -23,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if username availability error exists
         const userNameError = document.getElementById("user_name_ajax_error").textContent;
-        if (userNameError.includes("exists")) {
+        if (!userNameError.includes("available") && !userNameError.includes("Username is available")) {
             isValid = false;
         }
 
@@ -140,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     clearError(input);
                 }
                 break;
+
             default:
                 clearError(input);
         }
