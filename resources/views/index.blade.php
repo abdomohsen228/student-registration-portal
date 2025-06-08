@@ -26,10 +26,10 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
         <h1 data-translate="register">{{ __('messages.register') }}</h1>
 
         <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
-            @csrf
             <!--___________________________FULLNAME/USERNAME____________________________________________________-->
+            {{-- @csrf --}}
             <div class="input-box" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
-                <div class="box">
+                <div class="box" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                     <input type="text" id="F_name" name="full_name" autofocus required>
                     <span class="error" id="full_name_error"><?php echo $errors['full_name'] ?? '' ?></span>
                     <label for="name" data-translate="fullName">{{ __('messages.fullName') }}</label>
@@ -37,7 +37,7 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
 
                 </div>
 
-                <div class="box">
+                <div class="box" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
                     <input type="text" id="user_name" name="user_name" autofocus required>
                     <span class="error" id="user_name_error"><?php echo $errors['user_name'] ?? '' ?></span>
                     <span class="error" id="user_name_ajax_error"></span> <!-- For AJAX validation -->
@@ -125,6 +125,7 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
                 </div>
             </div>
 
+            @csrf
 
         </form>
     </div>
