@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("validate-whatsapp").addEventListener("click", function () {
         let whatsappInput = document.getElementById("whatsapp_number");
-        let whatsappNumber = whatsappInput.value || whatsappInput.getAttribute("value"); //34an el input type=tel msh text f I have to getattribute to remove the '+' if existing
+        let whatsappNumber = whatsappInput.value || whatsappInput.getAttribute("value");
 
         const validationResult = document.getElementById("validation-result");
         const whatsappError = document.getElementById("whatsapp_error");
@@ -19,8 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             whatsappNumber = whatsappNumber.substring(1);
         }
 
-
-        fetch("API_Ops.php", {
+        fetch("/validate-whatsapp", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -29,6 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then(response => response.json())
             .then(data => {
+                console.log("API response:", data);
+
+                if (!data || typeof data.status === "undefined") {
+                    validationResult.textContent = "⚠ API did not respond properly.";
+                    validationResult.style.color = "orange";
+                    return;
+                }
                 if (data.status === "valid") {
                     validationResult.textContent = "✅ WhatsApp number is valid.";
                     validationResult.style.color = "green";
