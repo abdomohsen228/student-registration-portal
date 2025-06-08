@@ -12,6 +12,39 @@ class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function validUserData($overrides = [])
+    {
+        return array_merge([
+            'full_name' => 'John Doe',
+            'user_name' => 'johndoe123',
+            'phone' => '1234567890',
+            'email' => 'john@example.com',
+            'password' => 'Password123!',
+            'password_confirmation' => 'Password123!',
+        ], $overrides);
+    }
+
+    public function test_create_new_user_successfully()
+    {
+        Storage::fake('public');
+
+        $response = $this->post('/register', $this->validUserData());
+
+        $response->assertStatus(201)
+            ->assertJson([
+                'message' => 'User created successfully',
+            ]);
+
+        $this->assertDatabaseHas('users', [
+            'user_name' => 'johndoe123',
+            'email' => 'john@example.com',
+        ]);
+
+        // Verify password is hashed
+        $user = User::first();
+        $this->assertTrue(Hash::check('Password123!', $user->password));
+    }
+
     public function test_can_create_user_with_image()
     {
         Storage::fake('public');
@@ -100,39 +133,6 @@ class UserControllerTest extends TestCase
 
         $response->assertStatus(422); 
         Storage::disk('public')->assertMissing('profile_images');
-    }
-
-    protected function validUserData($overrides = [])
-    {
-        return array_merge([
-            'full_name' => 'John Doe',
-            'user_name' => 'johndoe123',
-            'phone' => '1234567890',
-            'email' => 'john@example.com',
-            'password' => 'Password123!',
-            'password_confirmation' => 'Password123!',
-        ], $overrides);
-    }
-
-    public function test_create_new_user_successfully()
-    {
-        Storage::fake('public');
-
-        $response = $this->post('/register', $this->validUserData());
-
-        $response->assertStatus(201)
-            ->assertJson([
-                'message' => 'User created successfully',
-            ]);
-
-        $this->assertDatabaseHas('users', [
-            'user_name' => 'johndoe123',
-            'email' => 'john@example.com',
-        ]);
-
-        // Verify password is hashed
-        $user = User::first();
-        $this->assertTrue(Hash::check('Password123!', $user->password));
     }
 
     public function test_check_username_availability()
