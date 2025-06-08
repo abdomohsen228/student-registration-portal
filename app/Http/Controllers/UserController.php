@@ -14,6 +14,7 @@ class UserController extends Controller
     public function createNewUser(Request $request)
     {
         try {
+            printf("Creating new user with data: %s\n", json_encode($request->all()));
             $validatedData = $this->validateUser($request);
 
             if ($request->hasFile('user_image')) {
@@ -28,6 +29,7 @@ class UserController extends Controller
             ], 201);
 
         } catch (ValidationException $e) {
+            print_r($e->errors());
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $e->errors(),
@@ -70,9 +72,10 @@ class UserController extends Controller
             'user_name' => [
                 'required',
                 'string',
-                'max:50',
-                'regex:/^[a-zA-Z0-9]*$/',
-                'unique:users,user_name',
+                'min:3',
+                'max:20',
+                'regex:/^[a-zA-Z0-9_-]+$/',
+                'unique:users,user_name'
             ],
             'phone' => [
                 'required',
@@ -132,6 +135,20 @@ class UserController extends Controller
         } catch (\Exception $e) {
             throw new \Exception('Failed to upload image: ' . $e->getMessage());
         }
+    }
+
+    public function checkUsername(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|min:3|max:20|regex:/^[a-zA-Z0-9_-]+$/'
+        ]);
+
+        $exists = User::where('user_name', $request->username)->exists();
+
+        return response()->json([
+            'available' => !$exists,
+            'message' => $exists ? 'Username already taken' : 'Username available'
+        ]);
     }
 
     protected function createUser(array $validatedData): User
