@@ -154,7 +154,7 @@ class UserController extends Controller
     protected function createUser(array $validatedData): User
     {
         try {
-            return User::create([
+            return User::create([ 
                 'full_name' => $validatedData['full_name'],
                 'user_name' => $validatedData['user_name'],
                 'phone' => $validatedData['phone'],
