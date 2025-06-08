@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Hash;
 
 class UserControllerTest extends TestCase
 {
@@ -99,5 +100,59 @@ class UserControllerTest extends TestCase
 
         $response->assertStatus(422); 
         Storage::disk('public')->assertMissing('profile_images');
+    }
+
+    protected function validUserData($overrides = [])
+    {
+        return array_merge([
+            'full_name' => 'John Doe',
+            'user_name' => 'johndoe123',
+            'phone' => '1234567890',
+            'email' => 'john@example.com',
+            'password' => 'Password123!',
+            'password_confirmation' => 'Password123!',
+        ], $overrides);
+    }
+
+    public function test_create_new_user_successfully()
+    {
+        Storage::fake('public');
+
+        $response = $this->post('/register', $this->validUserData());
+
+        $response->assertStatus(201)
+            ->assertJson([
+                'message' => 'User created successfully',
+            ]);
+
+        $this->assertDatabaseHas('users', [
+            'user_name' => 'johndoe123',
+            'email' => 'john@example.com',
+        ]);
+
+        // Verify password is hashed
+        $user = User::first();
+        $this->assertTrue(Hash::check('Password123!', $user->password));
+    }
+
+    public function test_check_username_availability()
+    {
+        User::factory()->create(['user_name' => 'takenusername']);
+
+        // Available username
+        $response = $this->post('/ajax/check-username', ['username' => 'newusername']);
+        $response->assertOk()
+        ->assertJson([
+            'available' => true,
+            'message' => 'Username available',
+        ]);
+
+        // Taken username
+        $response = $this->postJson('/ajax/check-username', ['username' => 'takenusername']);
+        $response->assertOk()
+        ->assertJson([
+            'available' => false,
+            'message' => 'Username already taken',
+        ]);
     }
 }
