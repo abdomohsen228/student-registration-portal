@@ -23,6 +23,18 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
 
     <div class="container" dir="ltr">
 
+        <!-- Display Success or Error Messages -->
+        @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        @if (session('error'))
+        <div class="alert alert-error">
+            {{ session('error') }}
+        </div>
+        @endif
+
         <h1 data-translate="register">{{ __('messages.register') }}</h1>
 
         <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
@@ -135,6 +147,10 @@ unset($_SESSION['errors']); // Clear errors after retrieving them
     window.translations = {
         en: @json(trans('messages', [], 'en')),
         ar: @json(trans('messages', [], 'ar'))
+    };
+    window.validationMessages = {
+        en: @json(trans('validation', [], 'en')),
+        ar: @json(trans('validation', [], 'ar'))
     };
     console.log('Translations:', window.translations); // Debugging
 </script>

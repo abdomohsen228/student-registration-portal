@@ -1,5 +1,5 @@
 <?php
-return [ 
+return [
     'home' => 'الرئيسية',
     'form' => 'النموذج',
     'login' => 'تسجيل الدخول',
@@ -26,5 +26,6 @@ return [
     'whatsApp' => 'واتساب',
     'validate' => 'تحقق',
     'uploadImage' => 'تحميل صورة',
-    'confirm' => 'تأكيد'
+    'confirm' => 'تأكيد',
+    'success' => 'تم التسجيل بنجاح!'
 ];

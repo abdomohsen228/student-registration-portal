@@ -1,14 +1,14 @@
 
 export class AjaxValidator {
     static async checkUsernameAvailability(username) {
+        const locale = localStorage.getItem('locale') || 'en';
         try {
-            // Validate format first (client-side)
             const formatError = this.validateUsernameFormat(username);
-            if (formatError) 
-                return ;
+            if (formatError) {
+                return { available: false, error: formatError };
+            }
 
-            // Check availability via AJAX
-            const response = await fetch(`/ajax/check-username`, {
+            const response = await fetch(`/ajax/check-username?locale=${locale}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,14 +22,13 @@ export class AjaxValidator {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            return data;
-
+            return await response.json();
         } catch (error) {
             console.error('Error checking username:', error);
-            return { 
-                available: true, // Assume available if check fails
-                error: 'Could not verify username availability'
+            const translations = window.translations?.[locale] || {};
+            return {
+                available: true,
+                error: translations.check_username_error || 'Could not verify username availability'
             };
         }
     }
@@ -38,15 +37,18 @@ export class AjaxValidator {
         const minLength = 3;
         const maxLength = 20;
         const regex = /^[a-zA-Z0-9_-]+$/;
+        const locale = localStorage.getItem('locale') || 'en';
+        const translations = window.translations?.[locale] || {};
+        const validationMessages = window.validationMessages?.[locale] || {};
 
         if (username.length < minLength) {
-            return `Username must be at least ${minLength} characters`;
+            return validationMessages.min?.string?.replace(':attribute', translations.user_name || 'username')?.replace(':min', minLength) || `Username must be at least ${minLength} characters`;
         }
         if (username.length > maxLength) {
-            return `Username must be no more than ${maxLength} characters`;
+            return validationMessages.max?.string?.replace(':attribute', translations.user_name || 'username')?.replace(':max', maxLength) || `Username must be no more than ${maxLength} characters`;
         }
         if (!regex.test(username)) {
-            return 'Only letters, numbers, _ and - allowed';
+            return validationMessages.regex?.user_name || 'Only letters, numbers, _ and - allowed';
         }
         return null;
     }

@@ -8,15 +8,28 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewUserRegistered;
+
 
 class UserController extends Controller
 {
     public function createNewUser(Request $request)
     {
         try {
-            // printf("Creating new user with data: %s\n", json_encode($request->all()));
+
+            // Set locale from request
+            $locale = $request->input('locale', config('app.locale')); // Default to app.locale
+            if (in_array($locale, ['en', 'ar'])) {
+                App::setLocale($locale);
+            }
+
+            // Store locale in session for redirect
+            Session::put('locale', $locale);
+            printf("Creating new user with data: %s\n", json_encode($request->all()));
+
             $validatedData = $this->validateUser($request);
 
             if ($request->hasFile('user_image')) {
@@ -33,11 +46,15 @@ class UserController extends Controller
             ], 201);
 
         } catch (ValidationException $e) {
-            print_r($e->errors());
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $e->errors(),
-            ], 422);
+            // print_r($e->errors());
+            // return response()->json([
+            //     'message' => 'Validation failed',
+            //     'errors' => $e->errors(),
+            // ], 422);
+            // Store errors in session for redirect
+            Session::flash('errors', $e->errors());
+
+            return redirect()->back()->withInput();
 
         } catch (\Exception $e) {
             return response()->json([
