@@ -54,6 +54,10 @@
     border-bottom: 2px solid rgb(6, 6, 6);
 }
 
+#user_image_error {
+    bottom: 75px;
+}
+
 .box {
 
     border-bottom: 2px solid;
@@ -239,6 +243,9 @@ input:-webkit-autofill:active {
 
     }
 
+    #user_image_error {
+        bottom: 55px;
+    }
 
 }
 
@@ -285,6 +292,10 @@ input:-webkit-autofill:active {
         top: 0;
 
     }
+
+    #user_image_error {
+        bottom: 75px;
+    }
 }
 
 
@@ -308,11 +319,11 @@ input:-webkit-autofill:active {
         padding: 10px;
         margin-bottom: 0;
     }
-    
+
     #lang-button {
-        width:40px;
+        width: 40px;
         font-size: 10px;
-        padding:5px;
+        padding: 5px;
         height: 25px;
     }
 
@@ -335,7 +346,7 @@ input:-webkit-autofill:active {
 
     .box1 {
         margin: 10px;
-        right:35px;
+        right: 35px;
     }
 
     .confirm-btn {
@@ -352,7 +363,12 @@ input:-webkit-autofill:active {
         top: 0;
 
     }
+
     .input-box label {
-        max-width:67px;
+        max-width: 67px;
+    }
+
+    #user_image_error {
+        bottom: 55px;
     }
 }

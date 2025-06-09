@@ -26,6 +26,7 @@ return [
     'whatsApp' => 'WhatsApp',
     'validate' => 'Validate',
     'uploadImage' => 'Upload Image',
-    'confirm' => 'Confirm'
+    'confirm' => 'Confirm',
+    'success' => 'Registration successful!'
 
 ];
