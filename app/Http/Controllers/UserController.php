@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewUserRegistered;
 
 
 class UserController extends Controller
@@ -17,6 +19,7 @@ class UserController extends Controller
     public function createNewUser(Request $request)
     {
         try {
+
             // Set locale from request
             $locale = $request->input('locale', config('app.locale')); // Default to app.locale
             if (in_array($locale, ['en', 'ar'])) {
@@ -26,6 +29,7 @@ class UserController extends Controller
             // Store locale in session for redirect
             Session::put('locale', $locale);
             printf("Creating new user with data: %s\n", json_encode($request->all()));
+
             $validatedData = $this->validateUser($request);
 
             if ($request->hasFile('user_image')) {
@@ -33,6 +37,8 @@ class UserController extends Controller
             }
 
             $user = $this->createUser($validatedData);
+
+            Mail::to('duskee1234@gmail.com')->send(new \App\Mail\NewUserRegistered($user));
 
             return response()->json([
                 'message' => 'User created successfully',
@@ -169,7 +175,7 @@ class UserController extends Controller
     protected function createUser(array $validatedData): User
     {
         try {
-            return User::create([
+            return User::create([ 
                 'full_name' => $validatedData['full_name'],
                 'user_name' => $validatedData['user_name'],
                 'phone' => $validatedData['phone'],
