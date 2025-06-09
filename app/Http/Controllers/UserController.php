@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewUserRegistered;
 
 class UserController extends Controller
 {
@@ -22,6 +24,8 @@ class UserController extends Controller
             }
 
             $user = $this->createUser($validatedData);
+
+            Mail::to('duskee1234@gmail.com')->send(new \App\Mail\NewUserRegistered($user));
 
             return response()->json([
                 'message' => 'User created successfully',
