@@ -21,6 +21,6 @@ class NewUserRegistered extends Mailable
     public function build()
     {
         return $this->subject('New User Registration')
-                    ->view('emails.new_user_registered');
+                    ->view('emails/new_user_registered');
     }
 }
