@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.documentElement.setAttribute('lang', savedLocale);
     document.documentElement.setAttribute('dir', savedLocale === 'ar' ? 'rtl' : 'ltr');
-    button.textContent = savedLocale === 'en' ? 'AR' : 'EN';
+
     document.getElementById('locale').value = savedLocale;
 
     document.querySelectorAll('[data-translate]').forEach(element => {
@@ -55,3 +55,11 @@ document.addEventListener('DOMContentLoaded', () => {
         window.revalidateAll();
     }
 });
+
+function onPageReload() {
+
+    if (performance.navigation.type === 1) {
+        localStorage.setItem('locale','en');
+    }
+}
+window.onload = onPageReload;

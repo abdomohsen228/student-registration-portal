@@ -44,13 +44,18 @@ class UserController extends Controller
                 'message' => 'User created successfully',
                 'user' => $user,
             ], 201);
-
         } catch (ValidationException $e) {
             // print_r($e->errors());
+
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $e->errors(),
             ], 422);
+
+            // Session::flash('errors', $e->errors());
+
+            //return redirect()->back()->withInput();
+
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'User creation failed',
@@ -147,7 +152,6 @@ class UserController extends Controller
             $path = $imageFile->storeAs('profile_images', $filename, 'public');
 
             return Storage::url($path);
-
         } catch (\Exception $e) {
             throw new \Exception('Failed to upload image: ' . $e->getMessage());
         }
@@ -170,7 +174,7 @@ class UserController extends Controller
     protected function createUser(array $validatedData): User
     {
         try {
-            return User::create([ 
+            return User::create([
                 'full_name' => $validatedData['full_name'],
                 'user_name' => $validatedData['user_name'],
                 'phone' => $validatedData['phone'],
@@ -188,6 +192,4 @@ class UserController extends Controller
             throw new \Exception('Failed to create user: ' . $e->getMessage());
         }
     }
-
-
 }

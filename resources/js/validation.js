@@ -245,13 +245,16 @@ document.addEventListener("DOMContentLoaded", function () {
     function setupFloatingLabel(input) {
         const span = input.nextElementSibling;
         const label = span?.nextElementSibling;
+        const ajaxError = document.getElementById('user_name_ajax_error');
         if (!label) return;
 
         input.addEventListener('blur', () => {
+            if(label!=ajaxError)
             label.style.top = input.value.trim() !== '' ? '-5px' : '50%';
         });
 
         input.addEventListener('focus', () => {
+            if(label!=ajaxError)
             label.style.top = '-5px';
         });
     }

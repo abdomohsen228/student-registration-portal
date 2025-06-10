@@ -27,5 +27,7 @@ return [
     'validate' => 'تحقق',
     'uploadImage' => 'تحميل صورة',
     'confirm' => 'تأكيد',
-    'success' => 'تم التسجيل بنجاح!'
+    'success' => 'تم التسجيل بنجاح!',
+    'checking' => 'جاري التحقق...',
+    'username_available'=>'✓ متاح'
 ];
