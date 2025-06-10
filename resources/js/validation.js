@@ -250,12 +250,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         input.addEventListener('blur', () => {
             if(label!=ajaxError)
-            label.style.top = input.value.trim() !== '' ? '-5px' : '50%';
+            {label.style.top = input.value.trim() !== '' ? '-5px' : '50%';}
         });
 
         input.addEventListener('focus', () => {
             if(label!=ajaxError)
-            label.style.top = '-5px';
+            {label.style.top = '-5px';}
         });
     }
 

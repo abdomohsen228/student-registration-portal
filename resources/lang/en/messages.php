@@ -29,6 +29,7 @@ return [
     'confirm' => 'Confirm',
     'success' => 'Registration successful!',
     'checking' => 'Checking...',
-    'username_available' => '✓ Available'
+    'username_available' => '✓ Available',
+    'username_taken' => 'Username already taken, please choose another one',
 
 ];

@@ -46,7 +46,7 @@ document.getElementById("validate-whatsapp").addEventListener("click", async fun
         }
     } catch (error) {
         console.error("Validation error:", error);
-        validationResult.innerHTML = `❌ ${error.message}`;
+        validationResult.innerHTML = `❌ WhatsApp number is invalid.<br>The country and area code should be provided along with the number (e.g., 20XXXXXXXXXX for Egyptian Numbers)`;
         validationResult.style.color = "red";
         
         // Special handling for API key errors

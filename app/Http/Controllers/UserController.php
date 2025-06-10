@@ -159,6 +159,10 @@ class UserController extends Controller
 
     public function checkUsername(Request $request)
     {
+        $locale = $request->input('locale', config('app.locale')); // Default to app.localeAdd commentMore actions
+        if (in_array($locale, ['en', 'ar'])) {
+            App::setLocale($locale);
+        }
         $request->validate([
             'username' => 'required|string|min:3|max:20|regex:/^[a-zA-Z0-9_-]+$/'
         ]);
@@ -167,7 +171,7 @@ class UserController extends Controller
 
         return response()->json([
             'available' => !$exists,
-            'message' => $exists ? 'Username already taken' : 'Username available'
+            'message' => $exists ? __('messages.username_taken') : __('messages.username_available')
         ]);
     }
 
