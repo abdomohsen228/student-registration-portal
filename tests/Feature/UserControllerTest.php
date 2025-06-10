@@ -144,7 +144,7 @@ class UserControllerTest extends TestCase
         $response->assertOk()
         ->assertJson([
             'available' => true,
-            'message' => 'Username available',
+            'message' => '✓ Available',
         ]);
 
         // Taken username
@@ -152,7 +152,7 @@ class UserControllerTest extends TestCase
         $response->assertOk()
         ->assertJson([
             'available' => false,
-            'message' => 'Username already taken',
+            'message' => 'Username already taken, please choose another one',
         ]);
     }
 }
