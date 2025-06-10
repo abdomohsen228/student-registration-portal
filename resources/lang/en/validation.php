@@ -29,4 +29,5 @@ return [
         'whatsapp_number' => 'WhatsApp number',
         'user_image' => 'user image',
     ],
+    'check_username_error' => 'Could not verify username availability'
 ];
