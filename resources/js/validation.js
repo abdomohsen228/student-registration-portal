@@ -370,7 +370,7 @@ $(document).ready(function() {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Attention!',
-                        text: responseData.message || 'Registration failed',
+                        text: responseData.message || 'Registration failed, try another phone number as it might be already registered',
                         confirmButtonText: 'OK'
                     });
                 }
@@ -379,10 +379,13 @@ $(document).ready(function() {
                 let errorMessage = 'Registration failed';
                 
                 if (xhr.responseJSON) {
-                    if (xhr.responseJSON.message) {
-                        errorMessage = xhr.responseJSON.message;
-                    } else if (xhr.responseJSON.error) {
-                        errorMessage = xhr.responseJSON.error;
+                    // if (xhr.responseJSON.message) {
+                    //     console.error("Error response1:", xhr.responseJSON.message);
+                    //     errorMessage = xhr.responseJSON.message;
+                    // } 
+                    if (xhr.responseJSON.errors) {
+                        console.error("Error response2:", xhr.responseJSON.errors);
+                        errorMessage = xhr.responseJSON.errors[Object.keys(xhr.responseJSON.errors)[0]][0];
                     }
                 }
 
