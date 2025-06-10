@@ -27,6 +27,8 @@ return [
     'validate' => 'Validate',
     'uploadImage' => 'Upload Image',
     'confirm' => 'Confirm',
-    'success' => 'Registration successful!'
+    'success' => 'Registration successful!',
+    'checking' => 'Checking...',
+    'username_available' => '✓ Available'
 
 ];

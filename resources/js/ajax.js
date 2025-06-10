@@ -25,7 +25,7 @@ export class AjaxValidator {
             return await response.json();
         } catch (error) {
             console.error('Error checking username:', error);
-            const translations = window.translations?.[locale] || {};
+            const translations = window.validationMessages?.[locale] || {};
             return {
                 available: true,
                 error: translations.check_username_error || 'Could not verify username availability'

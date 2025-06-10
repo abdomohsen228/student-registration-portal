@@ -29,4 +29,5 @@ return [
         'whatsapp_number' => 'رقم واتساب',
         'user_image' => 'صورة المستخدم',
     ],
+    'check_username_error' => 'لم يتمكن من التحقق من توفر اسم المستخدم'
 ];
