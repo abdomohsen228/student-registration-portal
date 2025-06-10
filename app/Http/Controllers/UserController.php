@@ -28,7 +28,7 @@ class UserController extends Controller
 
             // Store locale in session for redirect
             Session::put('locale', $locale);
-            printf("Creating new user with data: %s\n", json_encode($request->all()));
+            // printf("Creating new user with data: %s\n", json_encode($request->all()));
 
             $validatedData = $this->validateUser($request);
 
@@ -38,22 +38,24 @@ class UserController extends Controller
 
             $user = $this->createUser($validatedData);
 
-            Mail::to('duskee1234@gmail.com')->send(new \App\Mail\NewUserRegistered($user));
-
+            Mail::to('salmasarhan676@gmail.com')->send(new \App\Mail\NewUserRegistered($user));
+            // printf("User created successfully: %s\n", json_encode($user));
             return response()->json([
                 'message' => 'User created successfully',
                 'user' => $user,
             ], 201);
         } catch (ValidationException $e) {
             // print_r($e->errors());
-            // return response()->json([
-            //     'message' => 'Validation failed',
-            //     'errors' => $e->errors(),
-            // ], 422);
-            // Store errors in session for redirect
-            Session::flash('errors', $e->errors());
 
-            return redirect()->back()->withInput();
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+
+            // Session::flash('errors', $e->errors());
+
+            //return redirect()->back()->withInput();
+
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'User creation failed',

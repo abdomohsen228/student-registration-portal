@@ -292,3 +292,127 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.revalidateAll = revalidateAll;
 });
+
+$(document).ready(function() {
+    $('#registrationForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Clear previous error messages
+        $('.error').text('');
+        
+        // Create FormData object to handle file upload
+        let formData = new FormData(this);
+        
+        // Show loading indicator
+        Swal.fire({
+            title: 'Processing',
+            text: 'Please wait...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Submit form via AJAX
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response, status, xhr) {
+                // First, ensure we're working with the correct response data
+                let responseData = response;
+                
+                // If response is a string, try to extract JSON
+                if (typeof response === 'string') {
+                    try {
+                        // Look for the first { character
+                        const jsonStart = response.indexOf('{');
+                        if (jsonStart > -1) {
+                            responseData = JSON.parse(response.substring(jsonStart));
+                        } else {
+                            // If no JSON found, treat as error
+                            throw new Error('Invalid response format');
+                        }
+                    } catch (e) {
+                        console.error("Failed to parse response:", e, "Original response:", response);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Invalid response from server',
+                            confirmButtonText: 'OK'
+                        });
+                        return;
+                    }
+                }
+            
+                // Now handle the parsed response
+                if (xhr.status === 201 && responseData.message && 
+                    responseData.message.includes('User created successfully')) {
+                    console.log("Registration successful:", responseData);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: responseData.message,
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#registrationForm')[0].reset();
+                            window.location.href = '/';
+                        }
+                    });
+                } else {
+                    console.error("Unexpected response:", responseData);
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Attention!',
+                        text: responseData.message || 'Registration failed',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            error: function(xhr) {
+                let errorMessage = 'Registration failed';
+                
+                if (xhr.responseJSON) {
+                    if (xhr.responseJSON.message) {
+                        errorMessage = xhr.responseJSON.message;
+                    } else if (xhr.responseJSON.error) {
+                        errorMessage = xhr.responseJSON.error;
+                    }
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessage,
+                    confirmButtonText: 'OK'
+                });
+
+                // Display validation errors if they exist
+                if (xhr.status === 422 && xhr.responseJSON.errors) {
+                    const errors = xhr.responseJSON.errors;
+                    for (const field in errors) {
+                        const errorElement = $(`#${field}_error`);
+                        if (errorElement.length) {
+                            errorElement.text(errors[field][0]);
+                        } else {
+                            // If no specific field element, show first error in general alert
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Validation Error',
+                                text: errors[field][0],
+                                confirmButtonText: 'OK'
+                            });
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+    });
+});
