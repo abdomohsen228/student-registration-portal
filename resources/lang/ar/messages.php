@@ -29,5 +29,7 @@ return [
     'confirm' => 'تأكيد',
     'success' => 'تم التسجيل بنجاح!',
     'checking' => 'جاري التحقق...',
-    'username_available'=>'✓ متاح'
+    'username_available' => '✓ متاح',
+    'username_taken' => 'لقد تم استخدام اسم المستخدم بالفعل',
+    'username_available' => 'اسم المستخدم متاح',
 ];
